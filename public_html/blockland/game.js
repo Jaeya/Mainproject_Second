@@ -62,7 +62,7 @@ class Game {
 		}
 
 		this.anims.forEach(function (anim) { options.assets.push(`${game.assetsPath}fbx/anims/${anim}.fbx`) });
-		options.assets.push(`${game.assetsPath}fbx/town.fbx`);
+		//options.assets.push(`${game.assetsPath}fbx/town.fbx`);
 
 		this.mode = this.modes.PRELOAD;
 
@@ -251,6 +251,18 @@ class Game {
 			textMesh.rotation.y = 19
 			game.scene.add(textMesh)
 		});
+
+		const video = document.getElementById('video');
+		const videoTexture = new THREE.VideoTexture(video);
+		const videoMaterial = new THREE.MeshBasicMaterial({
+			map: videoTexture,
+			side: THREE.FrontSide,
+			toneMapped: false
+		});
+		const screen = new THREE.PlaneGeometry(1000, 1000, 1000);
+		const videoScreen = new THREE.Mesh(screen, videoMaterial);
+		this.scene.add(videoScreen);
+
 
 		// const startButton = document.getElementById('startButton'); //id값아 startButton 일 때
 		// startButton.addEventListener('click', this.init); //버튼을 클릭하면 음악재생
@@ -736,7 +748,6 @@ class Game {
 			});
 			game.scene.add(stairs);
 		});
-
 		// model
 		const game = this;
 

@@ -125,7 +125,8 @@
 	<script type="module" src="libs/three.js-master/src/audio/Audio.js"></script>
 
 	<script type="module" src="libs/three.js-master/src/loaders/TextureLoader.js"></script>
-
+	<script type="module" src="libs/three.js-master/src/textures/Texture.js"></script>
+	<script type="module" src="libs/three.js-master/src/textures/VideoTexture.js"></script>
 
 	<script src="libs/Detector.js"></script>
 	<script src="libs/toon3d.js"></script>
@@ -157,7 +158,11 @@
 	<!-- <div id="overlay">
 		<button id="startButton">Play</button>
 	</div> -->
-
+	<div id="video">
+		<video width="800px" height="600px" src="./assets/video/Beach - 79773.mp4" controls autoplay muted loop playsinline style="display: none;"></video>
+		<!-- 공유가능한 동영상 로드 -->
+		<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/ZbYjx2niBpE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
+	</div>
 	<!-- 사이드 바 -->
 	<div class="navigation">
 		<div class="bit">
