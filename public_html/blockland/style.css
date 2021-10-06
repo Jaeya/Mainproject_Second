@@ -39,7 +39,9 @@ body{
     min-height: 100vh;
     /* background: #150019; */
 }
-
+#video{
+    position: absolute;
+}
 /* navigation 클래스 기본설정 */
 .navigation{
     /* position의 relative는 위치값을 내가 넣고 싶은 곳으로

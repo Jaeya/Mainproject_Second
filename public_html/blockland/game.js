@@ -253,7 +253,7 @@ class Game {
 		});
 		// 동영상 화면 텍스쳐
 		const video = document.getElementById('video');
-		// video.play(); // 필수 자동재생
+		video.play(); // 필수 자동재생
 		const videoTexture = new THREE.VideoTexture(video);
 		const videoMaterial = new THREE.MeshBasicMaterial({
 			map: videoTexture,
@@ -262,12 +262,13 @@ class Game {
 		});
 		videoTexture.minFilter = THREE.LinearFilter; // 원래는 1920x960 이런식으로 영상의 사이즈에 맞게 설정해야하는데 
 		videoTexture.magFilter = THREE.LinearFilter; // 이 두개를 쓰면 그런 경고 사라짐
-1
+
 		const videoGeometry = new THREE.PlaneGeometry(10500, 4700, 2000);  // 동영상 재생 화면 생성 및 크기조정
 		const videoScreen = new THREE.Mesh(videoGeometry, videoMaterial);  // 동영상 화면 및 videoMaterial
 		videoScreen.position.set(0, 2000, 3920); //이게 맞는 위치
 		this.scene.add(videoScreen);
 
+		const videoRenderer = new THREE.CSS3DRenderer();
 		// const startButton = document.getElementById('startButton'); //id값아 startButton 일 때
 		// startButton.addEventListener('click', this.init); //버튼을 클릭하면 음악재생
 
