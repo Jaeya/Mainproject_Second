@@ -231,7 +231,7 @@ class Game {
 		});
 		// 텍스트5 팀명 : No Name
 		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
-			const fgeometry = new THREE.TextGeometry('No Name', {
+			const fgeometry = new THREE.TextGeometry('Creeps', {
 				font: font,
 				size: 500, // 텍스트 크기
 				height: 20, // 돌출 두께
@@ -251,18 +251,24 @@ class Game {
 			textMesh.rotation.y = 19
 			game.scene.add(textMesh)
 		});
-
+		// 동영상 화면 텍스쳐
 		const video = document.getElementById('video');
-		const videoTexture = new THREE.VideoTexture(video);
-		const videoMaterial = new THREE.MeshBasicMaterial({
+		const videoTexture = new THREE.VideoTexture({
+			video: video,
+			map: THREE.UVMapping,
+			wrapS: THREE.RepeatWrapping,
+			wrapT: THREE.RepeatWrapping
+		});
+		const videoMaterial = new THREE.MeshPhongMaterial({
+			minFilter: THREE.LinearMipmapLinearFilter,
 			map: videoTexture,
-			side: THREE.FrontSide,
+			side: THREE.BackSide,
 			toneMapped: false
 		});
-		const screen = new THREE.PlaneGeometry(1000, 1000, 1000);
+		const screen = new THREE.PlaneGeometry(11000, 7000, 2000);
 		const videoScreen = new THREE.Mesh(screen, videoMaterial);
+		videoScreen.position.set(0, 3000, 3920);
 		this.scene.add(videoScreen);
-
 
 		// const startButton = document.getElementById('startButton'); //id값아 startButton 일 때
 		// startButton.addEventListener('click', this.init); //버튼을 클릭하면 음악재생

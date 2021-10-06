@@ -2,16 +2,45 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
+// const {userJoin , getCurrentUser, userLeave } = require('../../public_html/blockland/users')
+//this.users = new Users();
 
-app.use(express.static('../../public_html/blockland/'));
-app.use(express.static('../../public_html/libs'));
-app.use(express.static('../../public_html/blockland/v3'));
+let nickList = [];
+
+app.use(express.static('./public_html/blockland/users'));
+app.use(express.static('./public_html/blockland/'));
+app.use(express.static('./public_html/libs'));
+// app.use(express.static('../.a./public_html/blockland/v3'));
 app.get('/',function(req, res) {
-    res.sendFile(__dirname + '../../public_html/blockland/v3/index.html');
+    res.sendFile(__dirname + './public_html/blockland/index.html');
 });
 
-io.sockets.on('connection', function(socket){ 											//connection안에 이벤트 작성시 socket.on('event이름', 함수) 형식
-	socket.userData = { x:0, y:0, z:0, heading:0 };										//Default values; 사용자 데이터 정의
+io.sockets.on('connection', function(socket){
+	
+	
+	
+	//console.log("출력" + users.userJoin(socket.id, usernick))
+
+	socket.on('nickdata', (data) =>{
+
+		const newUser = data;
+		nickList.push(newUser);
+
+		io.emit('nicksave', nickList)
+		console.log(nickList);
+		
+
+		// const user = this.users.userJoin(socket.id, usernick );
+		// console.log("실험" , data.usernick);
+		// socket.join(user)
+		
+
+		
+	})
+
+	
+
+	socket.userData = { x:0, y:0, z:0, heading:0 };										
  
 	console.log(`${socket.id} connected`);
 	socket.emit('setId', { id:socket.id });//이벤트발생 함수 // 서버쪽에서 이벤트 발생시 클라이언트 페이지의 해당 이벤트 리스너 처리
