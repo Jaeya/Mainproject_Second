@@ -323,7 +323,7 @@ class Game {
 		//stage "#CCEEFF" 하늘색
 		const geometry = new THREE.BoxGeometry(11000, 100, 3000); // 5000,x,x
 		const material = new THREE.MeshBasicMaterial({ color: "black", wireframe: false });
-		const stage = new THREE.Mesh(geometry, material); 																//시작할때 서있는 스테이지박스
+		const stage = new THREE.Mesh(geometry, material); 												//시작할때 서있는 스테이지박스
 		stage.position.set(0, 100, 2950);
 		this.colliders.push(stage);
 		this.scene.add(stage);
@@ -346,8 +346,6 @@ class Game {
 
 		// });
 
-
-
 		//스크린 바깥
 		const geomscreenout = new THREE.BoxGeometry(11000, 4400, 80); // 5000,3000,80
 		const materscreenout = new THREE.MeshBasicMaterial({ color: 'black', wireframe: false });
@@ -365,7 +363,6 @@ class Game {
 		this.scene.add(screenin);
 
 		// 계단
-		//const loader = new THREE.FBXLoader();
 		loader.load(`${this.assetsPath}fbx/SM_Buildings_Stairs_1x2_01P.fbx`, function (Stair) {
 			Stair.position.set(-300, 0, 1500);
 			Stair.scale.set(5, 3, 3);

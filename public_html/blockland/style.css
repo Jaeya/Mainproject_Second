@@ -65,6 +65,13 @@ body{
     list-style: none;
     text-decoration: none;
 }
+
+.navigation .connect-users{
+    position: absolute;
+    top: 60px;
+    left: auto;
+    
+}
 /* 마우스가 navigation클래스에 올라갈 때 설정
 link -> visited -> hover -> active 순서로 해야 에러X */
 .navigation:hover,

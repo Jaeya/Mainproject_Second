@@ -22,14 +22,15 @@ io.sockets.on('connection', function(socket){
 	//console.log("출력" + users.userJoin(socket.id, usernick))
 
 	socket.on('nickdata', (data) =>{
+		console.log("User Data",   data.nick ,   data.id);
 
 		const newUser = data;
 		nickList.push(newUser);
 
 		io.emit('nicksave', nickList)
-		console.log(nickList);
 		
-
+		
+	
 		// const user = this.users.userJoin(socket.id, usernick );
 		// console.log("실험" , data.usernick);
 		// socket.join(user)
@@ -47,6 +48,7 @@ io.sockets.on('connection', function(socket){
 	
     socket.on('disconnect', function(){
 		socket.broadcast.emit('deletePlayer', { id: socket.id });//나를 제외한 전체에게 실시간 전송 // 특정 소켓 삭제
+		io.emit('deleteData',{id: socket.id});
     });	
 	
 	socket.on('init', function(data){
@@ -103,3 +105,5 @@ setInterval(function(){
     }
 	if (pack.length>0) io.emit('remoteData', pack);// 포켓길이가 0보다 크다고 가정하고 pack배열이 서버측으로 전송
 }, 40);
+
+
