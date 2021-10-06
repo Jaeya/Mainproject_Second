@@ -128,6 +128,7 @@
 	<script type="module" src="libs/three.js-master/src/loaders/TextureLoader.js"></script>
 	<script type="module" src="libs/three.js-master/src/textures/Texture.js"></script>
 	<script type="module" src="libs/three.js-master/src/textures/VideoTexture.js"></script>
+	<script type="module" src="libs/THREEx.KeyboardState.js"></script>
 
 	<script src="libs/Detector.js"></script>
 	<script src="libs/toon3d.js"></script>
@@ -162,9 +163,12 @@
 	<div>
 		<!-- <video width="800px" height="600px" src="./assets/video/Beach - 79773.mp4" controls autoplay muted loop playsinline style="display: none;"></video> -->
 		<!-- 공유가능한 동영상 로드 -->
-		<!-- <iframe width="560" height="315" src="https://www.youtube.com/embed/ZbYjx2niBpE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: none;"></iframe> -->
-		<!-- <video id="video" loop="" crossorigin="anonymous" playsinline="" autoplay style="display: none;">
-		<source src="./assets/video/Beach - 79773.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"'></video> -->
+		<div id="video">
+			<iframe src="https://www.youtube.com/embed/CuklIb9d3fI?autoplay=1%mute=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="display: none;"></iframe>
+		</div>
+		<!-- (muted / autoplay) = 크롬에서 2개가 같이 필수로 넣어야함 / loop 필수 -->
+		<!-- <video id="video" loop="" muted crossOrigin="anonymous" playsinline="" autoplay style="display: none;">
+		<source src="./assets/video/production ID_5007874.mp4" type='video/mp4; codecs="avc1.4D401E, mp4a.40.2"'></video> -->
 	</div>
 	<!-- 사이드 바 -->
 	<div class="navigation">
@@ -181,7 +185,7 @@
 			<li>
 				<button class="btn">
 					<span class="icon"><i class='fas fa-user-alt'></i></span>
-					<span class="title">Profile</span>
+					<span class="title">Profile</span>122
 				</button>
 			</li>
 			<li>

@@ -253,21 +253,19 @@ class Game {
 		});
 		// 동영상 화면 텍스쳐
 		const video = document.getElementById('video');
-		const videoTexture = new THREE.VideoTexture({
-			video: video,
-			map: THREE.UVMapping,
-			wrapS: THREE.RepeatWrapping,
-			wrapT: THREE.RepeatWrapping
-		});
-		const videoMaterial = new THREE.MeshPhongMaterial({
-			minFilter: THREE.LinearMipmapLinearFilter,
+		// video.play(); // 필수 자동재생
+		const videoTexture = new THREE.VideoTexture(video);
+		const videoMaterial = new THREE.MeshBasicMaterial({
 			map: videoTexture,
-			side: THREE.BackSide,
-			toneMapped: false
+			side: THREE.BackSide, // DoubleSide 양쪽 면이 다 보이게
+			overdraw: true
 		});
-		const screen = new THREE.PlaneGeometry(11000, 7000, 2000);
-		const videoScreen = new THREE.Mesh(screen, videoMaterial);
-		videoScreen.position.set(0, 3000, 3920);
+		videoTexture.minFilter = THREE.LinearFilter; // 원래는 1920x960 이런식으로 영상의 사이즈에 맞게 설정해야하는데 
+		videoTexture.magFilter = THREE.LinearFilter; // 이 두개를 쓰면 그런 경고 사라짐
+1
+		const videoGeometry = new THREE.PlaneGeometry(10500, 4700, 2000);  // 동영상 재생 화면 생성 및 크기조정
+		const videoScreen = new THREE.Mesh(videoGeometry, videoMaterial);  // 동영상 화면 및 videoMaterial
+		videoScreen.position.set(0, 2000, 3920); //이게 맞는 위치
 		this.scene.add(videoScreen);
 
 		// const startButton = document.getElementById('startButton'); //id값아 startButton 일 때
@@ -322,9 +320,9 @@ class Game {
 		const loader = new THREE.FBXLoader();
 		const MLoader = new THREE.MaterialLoader();
 
-		//stage
+		//stage "#CCEEFF" 하늘색
 		const geometry = new THREE.BoxGeometry(11000, 100, 3000); // 5000,x,x
-		const material = new THREE.MeshBasicMaterial({ color: 'black', wireframe: false });
+		const material = new THREE.MeshBasicMaterial({ color: "black", wireframe: false });
 		const stage = new THREE.Mesh(geometry, material); 																//시작할때 서있는 스테이지박스
 		stage.position.set(0, 100, 2950);
 		this.colliders.push(stage);
@@ -352,7 +350,7 @@ class Game {
 
 		//스크린 바깥
 		const geomscreenout = new THREE.BoxGeometry(11000, 4400, 80); // 5000,3000,80
-		const materscreenout = new THREE.MeshBasicMaterial({ color: 'gray', wireframe: false });
+		const materscreenout = new THREE.MeshBasicMaterial({ color: 'black', wireframe: false });
 		const screenout = new THREE.Mesh(geomscreenout, materscreenout);
 		screenout.position.set(0, 2300, 4000);
 		this.colliders.push(screenout);
@@ -1099,6 +1097,23 @@ class Game {
 		if (this.speechBubble !== undefined) this.speechBubble.show(this.camera.position);
 
 		this.renderer.render(this.scene, this.camera);
+		
 	}
 
+	update() {  //삭제
+		if (this.keyboard.pressed("p"))
+			this.video.play();
+
+		if (this.keyboard.pressed("space"))
+			this.video.pause();
+
+		if (this.keyboard.pressed("s")) // stop video
+		{
+			this.video.pause();
+			this.video.currentTime = 0;
+		}
+
+		if (this.keyboard.pressed("r")) // rewind video
+			this.video.currentTime = 0;
+	}
 }
