@@ -244,9 +244,7 @@ THREE.CSS3DRenderer = function () {
 			cache.camera.style = style;
 
 		}
-
 		renderObject( scene, camera );
-
 	};
 
 };

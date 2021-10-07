@@ -1,4 +1,3 @@
-
 class Game {
 	constructor() {
 		if (!Detector.webgl) Detector.addGetWebGLMessage();
@@ -13,13 +12,20 @@ class Game {
 		});
 		this.mode = this.modes.NONE;
 
-
 		this.container;
 		this.player;
 		this.cameras;
 		this.camera;
 		this.scene;
+		this.textMesh1;
+		this.textMesh2;
+		this.textMesh3;
+		this.textMesh4;
+		this.textMesh5;
+		this.textMesh6;
+		this.textMesh7;
 		this.renderer;
+		this.ytRenderer;
 		this.animations = {};
 		this.assetsPath = 'assets/';
 
@@ -62,7 +68,6 @@ class Game {
 		}
 
 		this.anims.forEach(function (anim) { options.assets.push(`${game.assetsPath}fbx/anims/${anim}.fbx`) });
-		//options.assets.push(`${game.assetsPath}fbx/town.fbx`);
 
 		this.mode = this.modes.PRELOAD;
 
@@ -136,13 +141,14 @@ class Game {
 				bevelOffset: 0, // 텍스트 윤곽선이 시작 되는 거리 : 기본값 0
 				bevelSegments: 5
 			});
-			const textMesh = new THREE.Mesh(fgeometry, [
+			fgeometry.center(); // 폰트 중심점 설정하기
+			game.textMesh1 = new THREE.Mesh(fgeometry, [
 				new THREE.MeshPhongMaterial({ color: 0xad4000 }), // front
 				new THREE.MeshPhongMaterial({ color: 0x5c2301 })	 // side
 			])
-			textMesh.castShadow = true
-			textMesh.position.set(-1000, 800, -1500) // 텍스트 위치
-			game.scene.add(textMesh)
+			game.textMesh1.castShadow = true
+			game.textMesh1.position.set(-1000, 900, -1500) // 텍스트 위치
+			game.scene.add(game.textMesh1)
 		});
 		// 텍스트1 팀명 : BIT 
 		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
@@ -157,13 +163,14 @@ class Game {
 				bevelOffset: 0, // 텍스트 윤곽선이 시작 되는 거리 : 기본값 0
 				bevelSegments: 5
 			});
-			const textMesh = new THREE.Mesh(fgeometry, [
+			fgeometry.center();
+			game.textMesh2 = new THREE.Mesh(fgeometry, [
 				new THREE.MeshPhongMaterial({ color: 0xad4000 }), // front
 				new THREE.MeshPhongMaterial({ color: 0x5c2301 })	 // side
 			])
-			textMesh.castShadow = true
-			textMesh.position.set(-1300, 650, -6000) // 텍스트 위치
-			game.scene.add(textMesh)
+			game.textMesh2.castShadow = true
+			game.textMesh2.position.set(-1300, 900, -6000) // 텍스트 위치
+			game.scene.add(game.textMesh2)
 		});
 		// 텍스트2 팀명 : MetaUS
 		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
@@ -178,14 +185,15 @@ class Game {
 				bevelOffset: 0, // 텍스트 윤곽선이 시작 되는 거리 : 기본값 0
 				bevelSegments: 5
 			});
-			const textMesh = new THREE.Mesh(fgeometry, [
+			fgeometry.center();
+			game.textMesh3 = new THREE.Mesh(fgeometry, [
 				new THREE.MeshPhongMaterial({ color: 0xad4000 }), // front
 				new THREE.MeshPhongMaterial({ color: 0x5c2301 })	 // side
 			])
-			textMesh.castShadow = true
-			textMesh.position.set(4000, 900, -7000) // 텍스트 위치
-			textMesh.rotation.y += 200
-			game.scene.add(textMesh)
+			game.textMesh3.castShadow = true
+			game.textMesh3.position.set(4000, 900, -7000) // 텍스트 위치
+			game.textMesh3.rotation.y += 200
+			game.scene.add(game.textMesh3)
 		});
 		// 텍스트3 팀명 : 4Runner
 		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
@@ -200,14 +208,15 @@ class Game {
 				bevelOffset: 0, // 텍스트 윤곽선이 시작 되는 거리 : 기본값 0
 				bevelSegments: 5
 			});
-			const textMesh = new THREE.Mesh(fgeometry, [
+			fgeometry.center();
+			game.textMesh4 = new THREE.Mesh(fgeometry, [
 				new THREE.MeshPhongMaterial({ color: 0xad4000 }), // front
 				new THREE.MeshPhongMaterial({ color: 0x5c2301 })	 // side
 			])
-			textMesh.castShadow = true
-			textMesh.position.set(7000, 900, -2500) // 텍스트 위치
-			textMesh.rotation.y = 30
-			game.scene.add(textMesh)
+			game.textMesh4.castShadow = true
+			game.textMesh4.position.set(7000, 900, -2500) // 텍스트 위치
+			game.textMesh4.rotation.y = 30
+			game.scene.add(game.textMesh4)
 		});
 		// 텍스트4 팀명 : 힐링캠프
 		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
@@ -222,14 +231,15 @@ class Game {
 				bevelOffset: 0, // 텍스트 윤곽선이 시작 되는 거리 : 기본값 0
 				bevelSegments: 5
 			});
-			const textMesh = new THREE.Mesh(fgeometry, [
+			fgeometry.center();
+			game.textMesh5 = new THREE.Mesh(fgeometry, [
 				new THREE.MeshPhongMaterial({ color: 0xad4000 }), // front
 				new THREE.MeshPhongMaterial({ color: 0x5c2301 })	 // side
 			])
-			textMesh.castShadow = true
-			textMesh.position.set(-7500, 900, 0) // 텍스트 위치
-			textMesh.rotation.y = 20
-			game.scene.add(textMesh)
+			game.textMesh5.castShadow = true
+			game.textMesh5.position.set(-7500, 900, 0) // 텍스트 위치
+			game.textMesh5.rotation.y = 20
+			game.scene.add(game.textMesh5)
 		});
 		// 텍스트5 팀명 : Creeps
 		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
@@ -244,14 +254,16 @@ class Game {
 				bevelOffset: 0, // 텍스트 윤곽선이 시작 되는 거리 : 기본값 0
 				bevelSegments: 5
 			});
-			const textMesh = new THREE.Mesh(fgeometry, [
+			fgeometry.center();
+			game.textMesh6 = new THREE.Mesh(fgeometry, [
 				new THREE.MeshPhongMaterial({ color: 0xad4000 }), // front
 				new THREE.MeshPhongMaterial({ color: 0x5c2301 })	 // side
 			])
-			textMesh.castShadow = true
-			textMesh.position.set(-6000, 800, -5000) // 텍스트 위치
-			textMesh.rotation.y = 19
-			game.scene.add(textMesh)
+			
+			game.textMesh6.castShadow = true
+			game.textMesh6.position.set(-6000, 800, -5000) // 텍스트 위치
+			game.textMesh6.rotation.y = 19
+			game.scene.add(game.textMesh6)
 		});
 		// 텍스트6 팀명 : KMH
 		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
@@ -266,51 +278,59 @@ class Game {
 				bevelOffset: 0, // 텍스트 윤곽선이 시작 되는 거리 : 기본값 0
 				bevelSegments: 5
 			});
-			const textMesh = new THREE.Mesh(fgeometry, [
+			fgeometry.center();
+			game.textMesh7 = new THREE.Mesh(fgeometry, [
 				new THREE.MeshPhongMaterial({ color: 0xad4000 }), // front
 				new THREE.MeshPhongMaterial({ color: 0x5c2301 })	 // side
 			])
-			textMesh.castShadow = true
-			textMesh.position.set(7500, 800, 1000) // 텍스트 위치
-			textMesh.rotation.y = 17
-			game.scene.add(textMesh)
+			game.textMesh7.castShadow = true
+			game.textMesh7.position.set(7500, 800, 1000) // 텍스트 위치
+			game.textMesh7.rotation.y = 17
+			game.scene.add(game.textMesh7)
 		});
-		// 동영상 화면 텍스쳐
-		// const video = document.getElementById('video');
-		// video.play(); // 필수 자동재생
-		// const videoTexture = new THREE.VideoTexture(video);
-		// const videoMaterial = new THREE.MeshBasicMaterial({
-		// 	map: videoTexture,
-		// 	side: THREE.BackSide, // DoubleSide 양쪽 면이 다 보이게
-		// 	overdraw: true
-		// });
-		// videoTexture.minFilter = THREE.LinearFilter; // 원래는 1920x960 이런식으로 영상의 사이즈에 맞게 설정해야하는데 
-		// videoTexture.magFilter = THREE.LinearFilter; // 이 두개를 쓰면 그런 경고 사라짐
-
-		// const videoGeometry = new THREE.PlaneGeometry(10500, 4700, 2000);  // 동영상 재생 화면 생성 및 크기조정
-		// const videoScreen = new THREE.Mesh(videoGeometry, videoMaterial);  // 동영상 화면 및 videoMaterial
-		// videoScreen.position.set(0, 2000, 3920); //이게 맞는 위치
-		// this.scene.add(videoScreen);
-		// 유튜브 영상 렌더
-		const bufferCubegeometry = new THREE.BoxBufferGeometry(500, 500, 500);
-		const cubeMaterial = new THREE.MeshBasicMaterial({
-			color: 0xffff00,
-			wireframe: false // 뼈대 보기
+		// // 동영상 화면 텍스쳐
+		const video = document.getElementById('video');
+		video.play(); // 필수 자동재생
+		const videoTexture = new THREE.VideoTexture(video);
+		const videoMaterial = new THREE.MeshBasicMaterial({
+			map: videoTexture,
+			side: THREE.BackSide, // DoubleSide 양쪽 면이 다 보이게
+			overdraw: true
 		});
-		this.cubeBufferMesh = new THREE.Mesh(bufferCubegeometry, cubeMaterial);
-		this.cubeBufferMesh.position.set(0, 500, 0)
+		videoTexture.minFilter = THREE.LinearFilter; // 원래는 1920x960 이런식으로 영상의 사이즈에 맞게 설정해야하는데 
+		videoTexture.magFilter = THREE.LinearFilter; // 이 두개를 쓰면 그런 경고 사라짐
 
-		this.scene.add(this.cubeBufferMesh);
+		const videoGeometry = new THREE.PlaneGeometry(10500, 4700, 2000);  // 동영상 재생 화면 생성 및 크기조정
+		const videoScreen = new THREE.Mesh(videoGeometry, videoMaterial);  // 동영상 화면 및 videoMaterial
+		videoScreen.position.set(0, 2000, 3920); //이게 맞는 위치
+		this.scene.add(videoScreen);
 		
-		const youtubeGeometry = new THREE.PlaneBufferGeometry(15000, 4000, 1000);
-		const youtuMaterial = new THREE.MeshBasicMaterial({
+		// 유튜브 영상 렌더
+		// const bufferCubegeometry = new THREE.BoxBufferGeometry(500, 500, 500);
+		// const cubeMaterial = new THREE.MeshBasicMaterial({
+		// 	color: 0xffff00,
+		// 	wireframe: false // 뼈대 보기
+		// });
+		// this.cubeBufferMesh = new THREE.Mesh(bufferCubegeometry, cubeMaterial);
+		// this.cubeBufferMesh.position.set(0, 500, 0)
 
-			side: THREE.DoubleSide
-		})
-		const youtubeScreen = new THREE.Mesh(youtubeGeometry, youtuMaterial);
+		// this.scene.add(this.cubeBufferMesh);
+		
+		// const youtubeGeometry = new THREE.PlaneBufferGeometry(15000, 10000, 1000);
+		// const youtbeuMaterial = new THREE.MeshBasicMaterial({
+		// 	side: THREE.DoubleSide
+		// })
+
+		// const youtubeScreen = new THREE.Mesh(youtubeGeometry, group.material);
+		// const youtubeScreen = new THREE.Mesh(youtubeGeometry, youtuMaterial);
 		// youtubeScreen.position.set(0, 2000, 3920); //위치
-		youtubeScreen.position.set(0, 2000, 0);
+		// youtubeScreen.position.set(0, 2000, 0);
 
+		
+		// youtubeScreen
+		// this.scene.add(youtubeScreen);
+		// this.scene.add( group );
+		// this.scene.add(elem);
 		// const startButton = document.getElementById('startButton'); //id값아 startButton 일 때
 		// startButton.addEventListener('click', this.init); //버튼을 클릭하면 음악재생
 
@@ -370,24 +390,6 @@ class Game {
 		stage.position.set(0, 100, 2950);
 		this.colliders.push(stage);
 		this.scene.add(stage);
-
-		// //TV
-		// loader.load(`${this.assetsPath}fbx/TV.fbx`, function (samsungTV) {
-		// 	samsungTV.position.set(0, 500, 2000);  
-		// 	samsungTV.scale.set(3, 3, 3);
-		// 	samsungTV.rotation.y = Math.PI  ;
-
-		// 	tLoader.load(`${game.assetsPath}images/MainOffice_tx/PolygonOffice_Texture_01_B.png`, function (samsungTV_tx) {
-		// 		samsungTV.traverse(function (child) {
-		// 			if (child.isMesh) {
-		// 				child.material.map = samsungTV_tx;
-		// 				game.colliders.push(child);
-		// 			}
-		// 		});							
-		// 	game.scene.add(samsungTV);		
-		// 	});
-
-		// });
 
 		//스크린 바깥
 		const geomscreenout = new THREE.BoxGeometry(11000, 4400, 80); // 5000,3000,80
@@ -903,7 +905,6 @@ class Game {
 					game.activeCamera = game.cameras.bird;
 					document.dispatchEvent(new KeyboardEvent('keydown', { key: '4' }));
 				}
-
 			})
 		})();
 	}
@@ -1069,10 +1070,16 @@ class Game {
 			this.sun.position.copy(this.camera.position);
 			this.sun.position.y += 10;
 		}
-
 		if (this.speechBubble !== undefined) this.speechBubble.show(this.camera.position);
 
 		this.renderer.render(this.scene, this.camera);
-		this.cubeBufferMesh.rotation.y += 0.01;
+		// this.cubeBufferMesh.rotation.y += 0.01;
+		game.textMesh1.rotation.y += 0.012;
+		game.textMesh2.rotation.y += 0.01;
+		game.textMesh3.rotation.y += 0.011;
+		game.textMesh4.rotation.y += 0.01;
+		game.textMesh5.rotation.y += 0.011;
+		game.textMesh6.rotation.y += 0.012;
+		game.textMesh7.rotation.y += 0.011;
 	}
 }
