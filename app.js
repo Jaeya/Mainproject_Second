@@ -29,14 +29,13 @@ io.sockets.on('connection', function(socket){
 
 		io.emit('nicksave', nickList)
 	
-	
+
 		// const user = this.users.userJoin(socket.id, usernick );
 		// console.log("실험" , data.usernick);
 		// socket.join(user)
 
 	})
 
-	
 
 	socket.userData = { x:0, y:0, z:0, heading:0 };										
  

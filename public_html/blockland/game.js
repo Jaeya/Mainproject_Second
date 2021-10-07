@@ -25,7 +25,7 @@ class Game {
 		this.textMesh6;
 		this.textMesh7;
 		this.renderer;
-		this.ytRenderer;
+
 		this.animations = {};
 		this.assetsPath = 'assets/';
 
@@ -94,7 +94,6 @@ class Game {
 	set activeCamera(object) {
 		this.cameras.active = object;
 	}
-
 
 	init() {
 		this.mode = this.modes.INITIALISING;
@@ -304,34 +303,24 @@ class Game {
 		const videoScreen = new THREE.Mesh(videoGeometry, videoMaterial);  // 동영상 화면 및 videoMaterial
 		videoScreen.position.set(0, 2000, 3920); //이게 맞는 위치
 		this.scene.add(videoScreen);
-		
-		// 유튜브 영상 렌더
-		// const bufferCubegeometry = new THREE.BoxBufferGeometry(500, 500, 500);
-		// const cubeMaterial = new THREE.MeshBasicMaterial({
-		// 	color: 0xffff00,
-		// 	wireframe: false // 뼈대 보기
-		// });
-		// this.cubeBufferMesh = new THREE.Mesh(bufferCubegeometry, cubeMaterial);
-		// this.cubeBufferMesh.position.set(0, 500, 0)
 
-		// this.scene.add(this.cubeBufferMesh);
-		
-		// const youtubeGeometry = new THREE.PlaneBufferGeometry(15000, 10000, 1000);
-		// const youtbeuMaterial = new THREE.MeshBasicMaterial({
-		// 	side: THREE.DoubleSide
-		// })
+		const video1 = document.getElementById('video1');
+		video1.play(); // 필수 자동재생
+		const videoTexture1 = new THREE.VideoTexture(video1);
+		const videoMaterial1 = new THREE.MeshBasicMaterial({
+			map: videoTexture1,
+			side: THREE.FrontSide, // DoubleSide 양쪽 면이 다 보이게
+			overdraw: true
+		});
+		videoTexture1.minFilter = THREE.LinearFilter; // 원래는 1920x960 이런식으로 영상의 사이즈에 맞게 설정해야하는데 
+		videoTexture1.magFilter = THREE.LinearFilter; // 이 두개를 쓰면 그런 경고 사라짐
 
-		// const youtubeScreen = new THREE.Mesh(youtubeGeometry, group.material);
-		// const youtubeScreen = new THREE.Mesh(youtubeGeometry, youtuMaterial);
-		// youtubeScreen.position.set(0, 2000, 3920); //위치
-		// youtubeScreen.position.set(0, 2000, 0);
+		const videoGeometry1 = new THREE.PlaneGeometry(500, 500, 2000);  // 동영상 재생 화면 생성 및 크기조정
+		const videoScreen1 = new THREE.Mesh(videoGeometry1, videoMaterial1);  // 동영상 화면 및 videoMaterial
+		videoScreen1.position.set(-700, 300, -6190); //이게 맞는 위치
+		this.scene.add(videoScreen1);
 
-		
-		// youtubeScreen
-		// this.scene.add(youtubeScreen);
-		// this.scene.add( group );
-		// this.scene.add(elem);
-		// const startButton = document.getElementById('startButton'); //id값아 startButton 일 때
+		// const startButton = document.getElementById('startButton'); //id값이 startButton 일 때
 		// startButton.addEventListener('click', this.init); //버튼을 클릭하면 음악재생
 
 		// const overlay = document.getElementById( 'overlay' );
@@ -1073,7 +1062,7 @@ class Game {
 		if (this.speechBubble !== undefined) this.speechBubble.show(this.camera.position);
 
 		this.renderer.render(this.scene, this.camera);
-		// this.cubeBufferMesh.rotation.y += 0.01;
+		
 		game.textMesh1.rotation.y += 0.012;
 		game.textMesh2.rotation.y += 0.01;
 		game.textMesh3.rotation.y += 0.011;

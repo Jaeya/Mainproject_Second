@@ -214,8 +214,39 @@ a {
 	font-size: 12px;
 }
 
+.create-nick{
+    position: absolute;
+    background-color:#777;
+}
+.create-nick h1{
+    position: absolute;
+    left: 45%;
+    top: 40%;
+}
+.user-nick{
+    position: absolute;
+    top: 50%;
+    left: 40%;
+    height: 40px;
+    width: 19%;
+}
+.save-nick{
+    position: absolute;
+    background-color: white;
+    color: black;
+    border: 2px solid #555555;
+    left: 60%;
+    top: 50%;
+    width: 80px;
+    font-size: 24px;
+    border-radius: 8px;
+    transition-duration: 0.4s;
+}
+.save-nick:hover{
+    background-color: #555555;
+    color: white;
+}
 /* Chat Page */
-
 .chat-container {
     position: absolute;
     display: none;
