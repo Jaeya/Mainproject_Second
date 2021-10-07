@@ -18,7 +18,7 @@ app.get('/',function(req, res) {
 io.sockets.on('connection', function(socket){
 	
 	
-	
+	console.log(nickList)
 	//console.log("출력" + users.userJoin(socket.id, usernick))
 
 	socket.on('nickdata', (data) =>{
@@ -28,15 +28,12 @@ io.sockets.on('connection', function(socket){
 		nickList.push(newUser);
 
 		io.emit('nicksave', nickList)
-		
-		
+	
 	
 		// const user = this.users.userJoin(socket.id, usernick );
 		// console.log("실험" , data.usernick);
 		// socket.join(user)
-		
 
-		
 	})
 
 	

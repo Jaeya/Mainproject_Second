@@ -25,13 +25,14 @@ class Users{
             console.log("배열확인", users);
         })
 
-        socket.on('deleteData', (delid) =>{
-
-             users = users.findIndex(users => users.id === delid)
-            // if(users !== -1)
-            console.log("일치", users);
+        socket.on('deleteData', (delid) => {
+            for (let i = 0; i < users.length; i++) {
+                if (users[i].id == delid.id) {
+                    console.log("탈퇴유저:", users[i].id);
+                    users.splice(i, 1)
+                }
+            }
         })
-
     }
 
     

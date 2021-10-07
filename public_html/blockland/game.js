@@ -119,7 +119,9 @@ class Game {
 
 		this.sun = light;
 		this.scene.add(light);
-
+		// --------------------------------------------------------------------------------------------------------------------
+		// -----------------------------------------------------텍 스 트-------------------------------------------------------
+		// --------------------------------------------------------------------------------------------------------------------
 		// 텍스트1 : Stage(기타)
 		const fontLoader = new THREE.FontLoader();
 		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
@@ -229,7 +231,7 @@ class Game {
 			textMesh.rotation.y = 20
 			game.scene.add(textMesh)
 		});
-		// 텍스트5 팀명 : No Name
+		// 텍스트5 팀명 : Creeps
 		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
 			const fgeometry = new THREE.TextGeometry('Creeps', {
 				font: font,
@@ -251,24 +253,64 @@ class Game {
 			textMesh.rotation.y = 19
 			game.scene.add(textMesh)
 		});
-		// 동영상 화면 텍스쳐
-		const video = document.getElementById('video');
-		video.play(); // 필수 자동재생
-		const videoTexture = new THREE.VideoTexture(video);
-		const videoMaterial = new THREE.MeshBasicMaterial({
-			map: videoTexture,
-			side: THREE.BackSide, // DoubleSide 양쪽 면이 다 보이게
-			overdraw: true
+		// 텍스트6 팀명 : KMH
+		fontLoader.load("/libs/three.js-master/examples/fonts/helvetiker_regular.typeface.json", function (font) {
+			const fgeometry = new THREE.TextGeometry('KMH', {
+				font: font,
+				size: 500, // 텍스트 크기
+				height: 20, // 돌출 두께
+				curveSegments: 12, // 곡선의 점 : 기본값 12
+				bevelEnabled: true, // 윤곽선 on
+				bevelThickness: 10, // 윤곽선 두께? : 기본값 10
+				bevelSize: 8, //텍스트 윤곽선 : 기본값 8
+				bevelOffset: 0, // 텍스트 윤곽선이 시작 되는 거리 : 기본값 0
+				bevelSegments: 5
+			});
+			const textMesh = new THREE.Mesh(fgeometry, [
+				new THREE.MeshPhongMaterial({ color: 0xad4000 }), // front
+				new THREE.MeshPhongMaterial({ color: 0x5c2301 })	 // side
+			])
+			textMesh.castShadow = true
+			textMesh.position.set(7500, 800, 1000) // 텍스트 위치
+			textMesh.rotation.y = 17
+			game.scene.add(textMesh)
 		});
-		videoTexture.minFilter = THREE.LinearFilter; // 원래는 1920x960 이런식으로 영상의 사이즈에 맞게 설정해야하는데 
-		videoTexture.magFilter = THREE.LinearFilter; // 이 두개를 쓰면 그런 경고 사라짐
+		// 동영상 화면 텍스쳐
+		// const video = document.getElementById('video');
+		// video.play(); // 필수 자동재생
+		// const videoTexture = new THREE.VideoTexture(video);
+		// const videoMaterial = new THREE.MeshBasicMaterial({
+		// 	map: videoTexture,
+		// 	side: THREE.BackSide, // DoubleSide 양쪽 면이 다 보이게
+		// 	overdraw: true
+		// });
+		// videoTexture.minFilter = THREE.LinearFilter; // 원래는 1920x960 이런식으로 영상의 사이즈에 맞게 설정해야하는데 
+		// videoTexture.magFilter = THREE.LinearFilter; // 이 두개를 쓰면 그런 경고 사라짐
 
-		const videoGeometry = new THREE.PlaneGeometry(10500, 4700, 2000);  // 동영상 재생 화면 생성 및 크기조정
-		const videoScreen = new THREE.Mesh(videoGeometry, videoMaterial);  // 동영상 화면 및 videoMaterial
-		videoScreen.position.set(0, 2000, 3920); //이게 맞는 위치
-		this.scene.add(videoScreen);
+		// const videoGeometry = new THREE.PlaneGeometry(10500, 4700, 2000);  // 동영상 재생 화면 생성 및 크기조정
+		// const videoScreen = new THREE.Mesh(videoGeometry, videoMaterial);  // 동영상 화면 및 videoMaterial
+		// videoScreen.position.set(0, 2000, 3920); //이게 맞는 위치
+		// this.scene.add(videoScreen);
+		// 유튜브 영상 렌더
+		const bufferCubegeometry = new THREE.BoxBufferGeometry(500, 500, 500);
+		const cubeMaterial = new THREE.MeshBasicMaterial({
+			color: 0xffff00,
+			wireframe: false // 뼈대 보기
+		});
+		this.cubeBufferMesh = new THREE.Mesh(bufferCubegeometry, cubeMaterial);
+		this.cubeBufferMesh.position.set(0, 500, 0)
 
-		const videoRenderer = new THREE.CSS3DRenderer();
+		this.scene.add(this.cubeBufferMesh);
+		
+		const youtubeGeometry = new THREE.PlaneBufferGeometry(15000, 4000, 1000);
+		const youtuMaterial = new THREE.MeshBasicMaterial({
+
+			side: THREE.DoubleSide
+		})
+		const youtubeScreen = new THREE.Mesh(youtubeGeometry, youtuMaterial);
+		// youtubeScreen.position.set(0, 2000, 3920); //위치
+		youtubeScreen.position.set(0, 2000, 0);
+
 		// const startButton = document.getElementById('startButton'); //id값아 startButton 일 때
 		// startButton.addEventListener('click', this.init); //버튼을 클릭하면 음악재생
 
@@ -379,7 +421,6 @@ class Game {
 			});
 			game.scene.add(Stair);
 		});
-
 		//차
 		loader.load(`${this.assetsPath}fbx/SM_Veh_Car_Sports_01.fbx`, function (Car) {
 			Car.position.set(-3900, 150, 3000);
@@ -396,25 +437,6 @@ class Game {
 			});
 			game.scene.add(Car);
 		});
-
-		//ironman
-		loader.load(`${this.assetsPath}fbx/Ironman.FBX`, function (Ironman) {
-			Ironman.position.set(-4700, 150, 3000);
-			Ironman.scale.set(20, 20, 20);
-			Ironman.rotation.y = Math.PI / 1.4;
-
-			tLoader.load(`${game.assetsPath}images/Mesh Patter.jpg`, function (Ironman_tx) {
-				Ironman.traverse(function (child) {
-					if (child.isMesh) {
-						child.material.map = Ironman_tx;
-						game.colliders.push(child);
-					}
-				});
-			});
-			game.scene.add(Ironman);
-
-		});
-
 		//남자매니저
 		loader.load(`${this.assetsPath}fbx/lpMale_casual_K.FBX`, function (lpMale_casual_K) {
 			lpMale_casual_K.position.set(1400, 50, -3000);
@@ -470,25 +492,7 @@ class Game {
 		// 		});							
 		// 	game.scene.add(man_cartoon);		
 		// 	});
-
 		// });
-		//kmh
-		// loader.load(`${this.assetsPath}fbx/Iron_Man_Mark_44_Hulkbuster_fbx.FBX`, function (kmh) {
-		// 	kmh.position.set(-3900, 150, 3000);
-		// 	kmh.scale.set(100, 100, 100);
-		// 	kmh.rotation.y = Math.PI / 1.4;
-
-		// 	tLoader.load(`${game.assetsPath}images/1.png`, function (kmhclothes) {
-		// 		kmh.traverse(function (child) {
-		// 			if (child.isMesh) {
-		// 				child.material.map = kmhclothes;
-		// 				game.colliders.push(child);
-		// 			}
-		// 		});
-		// 	});
-		// 	game.scene.add(kmh);
-		// });
-
 		//농구동상
 		loader.load(`${this.assetsPath}fbx/CB_Discobolus_LOD0.fbx`, function (balloons) {
 			balloons.position.set(6000, 0, 3300);
@@ -505,7 +509,6 @@ class Game {
 			});
 			game.scene.add(balloons);
 		});
-
 		//트로피1 금
 		loader.load(`${this.assetsPath}fbx/SM_Icon_Cup_01.fbx`, function (Cup1) {
 			Cup1.position.set(-3600, 150, 2100);
@@ -522,7 +525,6 @@ class Game {
 			});
 			game.scene.add(Cup1);
 		});
-
 		//트로피2 은
 		loader.load(`${this.assetsPath}fbx/SM_Icon_Cup_02.fbx`, function (Cup2) {
 			Cup2.position.set(-3500, 150, 2100);
@@ -540,7 +542,6 @@ class Game {
 			game.scene.add(Cup2);
 
 		});
-
 		//트로피3 동
 		loader.load(`${this.assetsPath}fbx/SM_Icon_Cup_03.fbx`, function (Cup3) {
 			Cup3.position.set(-3700, 150, 2100);
@@ -558,7 +559,6 @@ class Game {
 			game.scene.add(Cup3);
 
 		});
-
 		//garden1====== ==================================================================================
 		loader.load(`${this.assetsPath}fbx/garden1.fbx`, function (garden1) {
 			garden1.position.set(-500, 500, -3000);
@@ -575,7 +575,6 @@ class Game {
 				game.scene.add(garden1);
 			});
 		});
-
 		//polygonoffice3====== ==================================================================================
 		//오피스1(작은집)
 		loader.load(`${this.assetsPath}fbx/polygonoffice3.fbx`, function (polygonoffice3) {
@@ -609,14 +608,12 @@ class Game {
 				});
 				game.scene.add(polygonkitchen);
 			});
-
 		});
 		//오피스3(휴게실)
 		loader.load(`${this.assetsPath}fbx/lounge4.fbx`, function (lounge4) {
 			lounge4.position.set(-8000, -160, -1100);
 			lounge4.scale.set(2, 2, 2);
 			lounge4.rotation.y = Math.PI;
-
 			tLoader.load(`${game.assetsPath}images/PolygonOffice_Texture_01_A.png`, function (lounge_tx) {
 				lounge4.traverse(function (child) {
 					if (child.isMesh) {
@@ -626,9 +623,7 @@ class Game {
 				});
 				game.scene.add(lounge4);
 			});
-
 		});
-
 		//smalloffice1(작은집) ==================================================================================
 		loader.load(`${this.assetsPath}fbx/smalloffice1.fbx`, function (smalloffice1) {
 			smalloffice1.position.set(7500, 380, 2000);  //(4800, 480, -9000)
@@ -662,12 +657,11 @@ class Game {
 			});
 		});
 		//LPMoffice ========================================================================================
-		//walls_doors3 
+		//walls_doors3 팀명 : 4Runner
 		loader.load(`${this.assetsPath}fbx/walls_doors3.fbx`, function (walls_doors3) {
-			walls_doors3.position.set(7000, 450, -2500);
+			walls_doors3.position.set(7000, 400, -2500);
 			walls_doors3.scale.set(2, 2, 2);
 			walls_doors3.rotation.y = Math.PI;
-
 			tLoader.load(`${game.assetsPath}images/colorpalette.png`, function (walls_doors3_tx) {
 				walls_doors3.traverse(function (child) {
 					if (child.isMesh) {
@@ -680,15 +674,12 @@ class Game {
 				// 	game.scene.add(material.scene)
 				// });	
 			});
-
 		});
-
-		//floor
+		//Floor 팀명 : 4Runner
 		loader.load(`${this.assetsPath}fbx/floor.fbx`, function (floor) {
 			floor.position.set(6500, 1000, -1000);
 			floor.scale.set(2, 2, 2);
 			floor.rotation.y = Math.PI;
-
 			tLoader.load(`${game.assetsPath}images/colorpalette.png`, function (floor_tx) {
 				floor.traverse(function (child) {
 					if (child.isMesh) {
@@ -699,7 +690,6 @@ class Game {
 				game.scene.add(floor);
 			});
 		});
-
 		//enterance1
 		loader.load(`${this.assetsPath}fbx/enterance1.fbx`, function (enterance1) {
 			enterance1.position.set(4900, 450, -100);//2600, 1000, -3100)
@@ -716,7 +706,6 @@ class Game {
 				game.scene.add(enterance1);
 			});
 		});
-
 		//structure(객석)====================================================================================
 		loader.load(`${this.assetsPath}fbx/Structure.fbx`, function (structure) {
 			structure.position.set(-400, 0, -400);
@@ -733,7 +722,6 @@ class Game {
 			});
 			game.scene.add(structure);
 		});
-
 		// stairs
 		loader.load(`${this.assetsPath}fbx/Stairs.fbx`, function (stairs) {
 			stairs.position.set(-500, 250, -420);
@@ -776,7 +764,6 @@ class Game {
 		} else {
 			window.addEventListener('mousedown', (event) => game.onMouseDown(event), false);
 		}
-
 		window.addEventListener('resize', () => game.onWindowResize(), false);
 	}
 
@@ -830,8 +817,6 @@ class Game {
 		game.scene.background = textureCube;
 
 		game.loadNextAnim(loader);
-
-
 	}
 
 	loadNextAnim(loader) {
@@ -846,11 +831,9 @@ class Game {
 				game.action = "Idle";
 				game.mode = game.modes.ACTIVE;
 				game.animate();
-
 			}
 		});
 	}
-
 	playerControl(forward, turn) {
 		turn = -turn;
 
@@ -866,13 +849,11 @@ class Game {
 				this.player.action = 'Idle';
 			}
 		}
-
 		if (forward == 0 && turn == 0) {
 			delete this.player.motion;
 		} else {
 			this.player.motion = { forward, turn };
 		}
-
 		this.player.updateSocket();
 	}
 
@@ -949,9 +930,7 @@ class Game {
 	onWindowResize() {
 		this.camera.aspect = window.innerWidth / window.innerHeight;
 		this.camera.updateProjectionMatrix();
-
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
-
 	}
 
 	updateRemotePlayers(dt) {
@@ -987,7 +966,6 @@ class Game {
 				}
 			}
 		});
-
 		this.scene.children.forEach(function (object) {
 			if (object.userData.remotePlayer && game.getRemotePlayerById(object.userData.id) == undefined) {//원격플레이어가 존재하지 않을경우
 				game.scene.remove(object);//장면에서 제거
@@ -1095,23 +1073,6 @@ class Game {
 		if (this.speechBubble !== undefined) this.speechBubble.show(this.camera.position);
 
 		this.renderer.render(this.scene, this.camera);
-		
-	}
-
-	update() {  //삭제
-		if (this.keyboard.pressed("p"))
-			this.video.play();
-
-		if (this.keyboard.pressed("space"))
-			this.video.pause();
-
-		if (this.keyboard.pressed("s")) // stop video
-		{
-			this.video.pause();
-			this.video.currentTime = 0;
-		}
-
-		if (this.keyboard.pressed("r")) // rewind video
-			this.video.currentTime = 0;
+		this.cubeBufferMesh.rotation.y += 0.01;
 	}
 }
