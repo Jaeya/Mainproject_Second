@@ -25,7 +25,7 @@ class Game {
 		this.textMesh6;
 		this.textMesh7;
 		this.renderer;
-
+		this.ytRenderer;
 		this.animations = {};
 		this.assetsPath = 'assets/';
 
@@ -288,12 +288,12 @@ class Game {
 			game.scene.add(game.textMesh7)
 		});
 		// // 동영상 화면 텍스쳐
-		const video = document.getElementById('video');
+		const video = document.getElementById('video1');
 		video.play(); // 필수 자동재생
 		const videoTexture = new THREE.VideoTexture(video);
 		const videoMaterial = new THREE.MeshBasicMaterial({
 			map: videoTexture,
-			side: THREE.BackSide, // DoubleSide 양쪽 면이 다 보이게
+			side: THREE.DoubleSide, // DoubleSide 양쪽 면이 다 보이게
 			overdraw: true
 		});
 		videoTexture.minFilter = THREE.LinearFilter; // 원래는 1920x960 이런식으로 영상의 사이즈에 맞게 설정해야하는데 
@@ -319,6 +319,38 @@ class Game {
 		const videoScreen1 = new THREE.Mesh(videoGeometry1, videoMaterial1);  // 동영상 화면 및 videoMaterial
 		videoScreen1.position.set(-700, 300, -6190); //이게 맞는 위치
 		this.scene.add(videoScreen1);
+
+		this.ytRenderer = new THREE.CSS3DRenderer(({alpha: true}));
+		this.ytRenderer.setSize(window.innerWidth, window.innerHeight)
+		document.body.appendChild(this.ytRenderer.domElement);
+
+		this.ytRenderer.domElement.style.position = 'absolute';
+    	this.ytRenderer.domElement.style.top = 0;
+    	//this.ytRenderer.domElement.style.zIndex = 0;
+
+		const section = document.createElement('section');
+		section.style.width = '2000px';
+		section.style.height = '1600px';
+		section.style.backgroundColor = '#000';
+
+		const iframe = document.createElement('iframe');
+		iframe.style.width = '2000px';
+		iframe.style.height = '1600px';
+		iframe.style.border = '0px';
+		// ?rel=0&amp;autoplay=1&amp;loop=1; 필수 추가
+		iframe.src = 'https://www.youtube.com/embed/9xBSLI7EsTg?rel=0&amp;autoplay=1&amp;loop=1;" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen';
+		section.appendChild(iframe);
+		const ytObject = new THREE.CSS3DObject(section);
+		ytObject.position.set(100, 500, 10);
+		
+		this.scene.add(ytObject);
+
+		// ytObject.position.set( 1010, 1000, 100 );
+		
+		// const ytGeometry = new THREE.PlaneGeometry(5000, 5000, 2000);
+		// const ytPlane = new THREE.Mesh( ytGeometry, ytObject );
+		// ytPlane.position.set(0, 2000, 3500); //이게 맞는 위치
+		// this.scene.add(ytPlane);
 
 		// const startButton = document.getElementById('startButton'); //id값이 startButton 일 때
 		// startButton.addEventListener('click', this.init); //버튼을 클릭하면 음악재생
@@ -379,22 +411,6 @@ class Game {
 		stage.position.set(0, 100, 2950);
 		this.colliders.push(stage);
 		this.scene.add(stage);
-
-		//스크린 바깥
-		const geomscreenout = new THREE.BoxGeometry(11000, 4400, 80); // 5000,3000,80
-		const materscreenout = new THREE.MeshBasicMaterial({ color: 'black', wireframe: false });
-		const screenout = new THREE.Mesh(geomscreenout, materscreenout);
-		screenout.position.set(0, 2300, 4000);
-		this.colliders.push(screenout);
-		this.scene.add(screenout);
-
-		//스크린 안
-		const geomscreenin = new THREE.BoxGeometry(10500, 3800, 100);  // 2500
-		const materscreenin = new THREE.MeshBasicMaterial({ color: 'white', wireframe: false });
-		const screenin = new THREE.Mesh(geomscreenin, materscreenin);
-		screenin.position.set(0, 2150, 4000);
-		this.colliders.push(screenin);
-		this.scene.add(screenin);
 
 		// 계단
 		loader.load(`${this.assetsPath}fbx/SM_Buildings_Stairs_1x2_01P.fbx`, function (Stair) {
@@ -484,22 +500,6 @@ class Game {
 		// 	game.scene.add(man_cartoon);		
 		// 	});
 		// });
-		//농구동상
-		loader.load(`${this.assetsPath}fbx/CB_Discobolus_LOD0.fbx`, function (balloons) {
-			balloons.position.set(6000, 0, 3300);
-			balloons.scale.set(6, 6, 6);
-			balloons.rotation.y = Math.PI / 1.5;
-
-			tLoader.load(`${game.assetsPath}images/Road_divider.png`, function (balloonstext) {
-				balloons.traverse(function (child) {
-					if (child.isMesh) {
-						child.material.map = balloonstext;
-						game.colliders.push(child);
-					}
-				});
-			});
-			game.scene.add(balloons);
-		});
 		//트로피1 금
 		loader.load(`${this.assetsPath}fbx/SM_Icon_Cup_01.fbx`, function (Cup1) {
 			Cup1.position.set(-3600, 150, 2100);
@@ -549,22 +549,6 @@ class Game {
 			});
 			game.scene.add(Cup3);
 
-		});
-		//garden1====== ==================================================================================
-		loader.load(`${this.assetsPath}fbx/garden1.fbx`, function (garden1) {
-			garden1.position.set(-500, 500, -3000);
-			garden1.scale.set(3, 3, 3);
-			garden1.rotation.y = Math.PI;
-
-			tLoader.load(`${game.assetsPath}images/MainOffice_tx/PolygonOffice_Texture_01_A.png`, function (garden1_tx) {
-				garden1.traverse(function (child) {
-					if (child.isMesh) {
-						child.material.map = garden1_tx;
-						game.colliders.push(child);
-					}
-				});
-				game.scene.add(garden1);
-			});
 		});
 		//polygonoffice3====== ==================================================================================
 		//오피스1(작은집)
@@ -744,7 +728,7 @@ class Game {
 			game: this
 		});
 
-		this.renderer = new THREE.WebGLRenderer({ antialias: true });
+		this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha:true, preserveDrawingBuffer: true });
 		this.renderer.setPixelRatio(window.devicePixelRatio);
 		this.renderer.setSize(window.innerWidth, window.innerHeight);
 		this.renderer.shadowMap.enabled = true;
@@ -757,19 +741,6 @@ class Game {
 		}
 		window.addEventListener('resize', () => game.onWindowResize(), false);
 	}
-
-	// mouseControls(){
-	// 	const controls = new THREE.OrbitControls(this.camera, this.renderer.domElement)
-	// 	controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-	// 	controls.dampingFactor = 0.05;
-
-	// 	controls.screenSpacePanning = false;
-
-	// 	controls.minDistance = 100;
-	// 	controls.maxDistance = 500;
-
-	// 	controls.maxPolarAngle = Math.PI / 2;
-	// }
 
 	loadEnvironment(loader) {
 		const game = this;
@@ -1062,7 +1033,7 @@ class Game {
 		if (this.speechBubble !== undefined) this.speechBubble.show(this.camera.position);
 
 		this.renderer.render(this.scene, this.camera);
-		
+		this.ytRenderer.render(this.scene, this.camera);
 		game.textMesh1.rotation.y += 0.012;
 		game.textMesh2.rotation.y += 0.01;
 		game.textMesh3.rotation.y += 0.011;
